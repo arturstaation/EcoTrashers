@@ -3,11 +3,11 @@ package com.example.ihc;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private long tempoRestante;
     private CountDownTimer countDownTimer;
-    private TextView textoTempo;
 
     float indice;
     TextView texto_pontos;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView lixo_imagem;
 
 
-    private final Handler handler = new Handler();
 
     // Dificuldade
     int acertos = 20; // a cada 20 acertos
@@ -64,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
         moedas = getMoeda.getLong("moedas", 0L);
 
     }
+    @SuppressLint("SetTextI18n")
     public void onJogar(View view) {
+        tempo = 10000;
         vidas = 3;
-        pontos = 0;
         pontos = 0;
         indice = 1;
         tempoRestante = tempo;
@@ -101,71 +100,68 @@ public class MainActivity extends AppCompatActivity {
             lixo_imagem.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_green_light));
         }
 
-        // Inicialize o contador de tempo
+
         startCountdown();
 
-        View.OnClickListener lixoClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int lixoSelecionado = -1;
-                int id = v.getId();
+        View.OnClickListener lixoClickListener = v -> {
+            int lixoSelecionado = -1;
+            int id = v.getId();
 
-                if (id == R.id.lixo_metal) {
-                    lixoSelecionado = 0;
-                } else if (id == R.id.lixo_papel) {
-                    lixoSelecionado = 1;
-                } else if (id == R.id.lixo_plastico) {
-                    lixoSelecionado = 2;
-                } else if (id == R.id.lixo_vidro) {
-                    lixoSelecionado = 3;
-                }
+            if (id == R.id.lixo_metal) {
+                lixoSelecionado = 0;
+            } else if (id == R.id.lixo_papel) {
+                lixoSelecionado = 1;
+            } else if (id == R.id.lixo_plastico) {
+                lixoSelecionado = 2;
+            } else if (id == R.id.lixo_vidro) {
+                lixoSelecionado = 3;
+            }
 
-                if (lixoSelecionado == lixo) {
-                    pontos++;
-                    texto_pontos.setText("Pontos: " + pontos);
-                } else {
-                    vidas--;
-                    tempo = tempo - 1000;
-                    texto_vidas.setText("Vidas: " + vidas);
-                }
+            if (lixoSelecionado == lixo) {
+                pontos++;
+                texto_pontos.setText("Pontos: " + pontos);
+            } else {
+                vidas = vidas - 1;
+                tempo = tempo - 1000;
+                texto_vidas.setText("Vidas: " + vidas);
+            }
 
-                // Sorteie um novo lixo após cada clique
-                lixo = new Random().nextInt(4);
-                if (lixo == 0) {
-                    lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
-                } else if (lixo == 1) {
-                    lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
-                } else if (lixo == 2) {
-                    lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
-                } else {
-                    lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
-                }
+            // Sorteie um novo lixo após cada clique
+            lixo = new Random().nextInt(4);
+            if (lixo == 0) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+            } else if (lixo == 1) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
+            } else if (lixo == 2) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
+            } else {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
+            }
 
-                // Reinicie o contador de tempo
-                countDownTimer.cancel();
+            // Reinicie o contador de tempo
+            countDownTimer.cancel();
 
 
-                if(pontos % acertos == 0){ // a cada 30 acertos diminui o tempo
-                    indice = (float) (indice - reducao);
-                }
+            if(pontos % acertos == 0){
+                indice = (float) (indice - reducao);
+            }
 
 
 
-                //tempoRestante = tempoRestante + (int) (tempo*indice);
+            //tempoRestante = tempoRestante + (int) (tempo*indice);
 
 
-                if((long) (tempo*indice) < 2000){
-                    tempoRestante = 2000;
-                }
-                else {
-                    tempoRestante = (long) (tempo * indice);
-                }
-                startCountdown();
+            if((long) (tempo*indice) < 2000){
+                tempoRestante = 2000;
+            }
+            else {
+                tempoRestante = (long) (tempo * indice);
+            }
+            startCountdown();
 
-                // Verifique se o jogo acabou
-                if (vidas <= 0) {
-                    gameOver();
-                }
+            // Verifique se o jogo acabou
+            if (vidas <= 0) {
+                gameOver();
             }
         };
 
@@ -175,11 +171,12 @@ public class MainActivity extends AppCompatActivity {
         lixo_vidro.setOnClickListener(lixoClickListener);
     }
 
+    @SuppressLint("SetTextI18n")
     private void atualizarTempoRestante() {
         try {
-            textoTempo = findViewById(R.id.texto_tempo);
+            TextView textoTempo = findViewById(R.id.texto_tempo);
             textoTempo.setText("Tempo Restante: " + (tempoRestante / 1000) + "s");
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
 
         }
     }
@@ -194,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
                 atualizarTempoRestante();
             }
 
+            @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tempoRestante = 0;
                 atualizarTempoRestante();
-                vidas--;
+                vidas = vidas - 1;
+                tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
 
 
@@ -226,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
+    @SuppressLint("SetTextI18n")
     private void gameOver() {
         tempoRestante = 0;
         setContentView(R.layout.activity_perder);
@@ -257,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @SuppressLint("SetTextI18n")
     public void onPerfil(View view){
 
         setContentView(R.layout.activity_perfil);
