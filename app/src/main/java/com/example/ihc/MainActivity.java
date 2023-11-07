@@ -27,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private long highscore;
     private long moedas;
 
+
+
     private long tempoRestante;
     private CountDownTimer countDownTimer;
     private TextView textoTempo;
 
-
+    float indice;
     TextView texto_pontos;
     TextView texto_vidas;
     ImageView lixo_metal;
@@ -42,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private final Handler handler = new Handler();
+
+    // Dificuldade
+    int acertos = 20; // a cada 20 acertos
+    float reducao = 0.05F; // reduz 5% do tempo atual
+
+    long tempo = 10000; // tempo inicial
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     public void onJogar(View view) {
         vidas = 3;
         pontos = 0;
-        tempoRestante = 10000;
+        pontos = 0;
+        indice = 1;
+        tempoRestante = tempo;
         setContentView(R.layout.activity_jogar);
 
         texto_pontos = findViewById(R.id.texto_pontos);
@@ -113,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     texto_pontos.setText("Pontos: " + pontos);
                 } else {
                     vidas--;
+                    tempo = tempo - 1000;
                     texto_vidas.setText("Vidas: " + vidas);
                 }
 
@@ -130,7 +143,23 @@ public class MainActivity extends AppCompatActivity {
 
                 // Reinicie o contador de tempo
                 countDownTimer.cancel();
-                tempoRestante = 10000;
+
+
+                if(pontos % acertos == 0){ // a cada 30 acertos diminui o tempo
+                    indice = (float) (indice - reducao);
+                }
+
+
+
+                //tempoRestante = tempoRestante + (int) (tempo*indice);
+
+
+                if((long) (tempo*indice) < 2000){
+                    tempoRestante = 2000;
+                }
+                else {
+                    tempoRestante = (long) (tempo * indice);
+                }
                 startCountdown();
 
                 // Verifique se o jogo acabou
@@ -178,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     gameOver();
                 } else {
                     // Se não, reinicie o contador
-                    tempoRestante = 10000;
+                    tempoRestante = tempo;
 
                     lixo = new Random().nextInt(4);
                     if (lixo == 0) {
