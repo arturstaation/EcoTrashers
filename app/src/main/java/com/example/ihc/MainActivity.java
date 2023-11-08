@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         moedas = getMoeda.getLong("moedas", 0L);
 
     }
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     public void onJogar(View view) {
         tempo = 10000;
         vidas = 3;
@@ -161,11 +161,7 @@ public class MainActivity extends AppCompatActivity {
             int action = event.getAction();
             switch (action) {
                 case DragEvent.ACTION_DRAG_STARTED:
-                    if (event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
 
                 case DragEvent.ACTION_DRAG_ENTERED:
                     v.setBackgroundColor(Color.GREEN);
