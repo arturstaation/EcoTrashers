@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -145,13 +146,15 @@ public class MainActivity extends AppCompatActivity {
         lixo_vidro.setOnClickListener(lixoClickListener);
 
 
-        lixo_imagem.setOnLongClickListener(v -> {
-
-            ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-            v.startDragAndDrop(data, shadowBuilder, v, 0);
-            v.setVisibility(View.INVISIBLE);
-            return true;
+        lixo_imagem.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+                v.startDragAndDrop(data, shadowBuilder, v, 0);
+                v.setVisibility(View.INVISIBLE);
+                return true;
+            }
+            return false;
         });
 
         View.OnDragListener lixoDragListener = (v, event) -> {
