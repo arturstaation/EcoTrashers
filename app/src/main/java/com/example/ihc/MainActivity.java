@@ -9,6 +9,7 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.DragEvent;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView lixo_vidro;
     ImageView lixo_imagem;
 
-
+    MediaPlayer mediaPlayer;
 
     // Dificuldade
     int acertos = 20; // a cada 20 acertos
@@ -66,9 +67,34 @@ public class MainActivity extends AppCompatActivity {
         highscore = getHigh.getLong("highscore", 0L);
         moedas = getMoeda.getLong("moedas", 0L);
 
+        if(mediaPlayer !=null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
+        mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if(mediaPlayer != null){
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+
+                    mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
+                    mediaPlayer.start();
+                }
+            }
+        });
+
+
     }
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     public void onJogar(View view) {
+        mediaPlayer.release();
+        mediaPlayer = null;
+
         tempo = 10000;
         vidas = 3;
         pontos = 0;
@@ -114,9 +140,51 @@ public class MainActivity extends AppCompatActivity {
 
             if (lixoSelecionado == lixo) {
                 pontos++;
+                if(mediaPlayer != null){
+
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+
+                    mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                    mediaPlayer.start();
+
+
+
+                mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                mediaPlayer.start();
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if(mediaPlayer != null){
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
+                }
+            });
                 texto_pontos.setText("Pontos: " + pontos);
             } else {
                 vidas = vidas - 1;
+                if(mediaPlayer != null){
+
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+
+
+                mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
+                mediaPlayer.start();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if(mediaPlayer != null){
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    }
+                });
                 tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
             }
@@ -187,9 +255,47 @@ public class MainActivity extends AppCompatActivity {
                     if (lixoSelecionado != -1) {
                         if (lixoSelecionado == lixo) {
                             pontos++;
+                            if(mediaPlayer != null){
+
+                                mediaPlayer.release();
+                                mediaPlayer = null;
+
+                            }
+                            mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                            mediaPlayer.start();
+
+
+                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    if(mediaPlayer != null){
+                                        mediaPlayer.release();
+                                        mediaPlayer = null;
+                                    }
+                                }
+                            });
                             texto_pontos.setText("Pontos: " + pontos);
                         } else {
-                            vidas--;
+                            vidas = vidas -1;
+                            if(mediaPlayer != null){
+
+                                mediaPlayer.release();
+                                mediaPlayer = null;
+                            }
+
+
+                            mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
+                            mediaPlayer.start();
+
+                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    if(mediaPlayer != null){
+                                        mediaPlayer.release();
+                                        mediaPlayer = null;
+                                    }
+                                }
+                            });
                             tempo -= 1000;
                             texto_vidas.setText("Vidas: " + vidas);
                         }
@@ -245,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void startCountdown() {
-
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
@@ -258,8 +363,36 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tempoRestante = 0;
+
+
+
+
+
+
+
+
                 atualizarTempoRestante();
                 vidas = vidas - 1;
+
+                if(mediaPlayer !=null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_errado);
+                mediaPlayer.start();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if(mediaPlayer != null){
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    }
+                });
+
+
                 tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
 
@@ -284,6 +417,26 @@ public class MainActivity extends AppCompatActivity {
 
         countDownTimer.cancel();
         tempoRestante = 0;
+
+        if(mediaPlayer != null){
+
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.audio_gameover);
+        mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if(mediaPlayer != null){
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+            }
+        });
 
         setContentView(R.layout.activity_perder);
         TextView derrota = findViewById(R.id.texto_highscore);
@@ -327,17 +480,59 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void GerarLixo(){
+
+
         lixo = new Random().nextInt(4);
         if (lixo == 0) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+            if(mediaPlayer != null){
+
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            mediaPlayer = MediaPlayer.create(this, R.raw.audio_metal);
+            mediaPlayer.start();
+
+
         } else if (lixo == 1) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
+            if(mediaPlayer != null){
+
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            mediaPlayer = MediaPlayer.create(this, R.raw.audio_papel);
+            mediaPlayer.start();
         } else if (lixo == 2) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
+            if(mediaPlayer != null){
+
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            mediaPlayer = MediaPlayer.create(this, R.raw.audio_plastico);
+            mediaPlayer.start();
         } else {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
+            if(mediaPlayer != null){
+
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            mediaPlayer = MediaPlayer.create(this, R.raw.audio_vidro);
+            mediaPlayer.start();
         }
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                 if(mediaPlayer != null){
+                     mediaPlayer.release();
+                     mediaPlayer = null;
+                 }
+            }
+        });
         startCountdown();
+
     }
 
 }
