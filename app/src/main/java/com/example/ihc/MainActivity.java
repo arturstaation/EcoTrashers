@@ -73,16 +73,13 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
         mediaPlayer.start();
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
+        mediaPlayer.setOnCompletionListener(mp -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
 
-                    mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
-                    mediaPlayer.start();
-                }
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
+                mediaPlayer.start();
             }
         });
 
@@ -152,13 +149,10 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
                     }
                 });
                 texto_pontos.setText("Pontos: " + pontos);
@@ -174,13 +168,10 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
                     }
                 });
                 tempo = tempo - 1000;
@@ -263,13 +254,10 @@ public class MainActivity extends AppCompatActivity {
                             mediaPlayer.start();
 
 
-                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.release();
-                                        mediaPlayer = null;
-                                    }
+                            mediaPlayer.setOnCompletionListener(mp -> {
+                                if (mediaPlayer != null) {
+                                    mediaPlayer.release();
+                                    mediaPlayer = null;
                                 }
                             });
                             texto_pontos.setText("Pontos: " + pontos);
@@ -285,13 +273,10 @@ public class MainActivity extends AppCompatActivity {
                             mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
                             mediaPlayer.start();
 
-                            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.release();
-                                        mediaPlayer = null;
-                                    }
+                            mediaPlayer.setOnCompletionListener(mp -> {
+                                if (mediaPlayer != null) {
+                                    mediaPlayer.release();
+                                    mediaPlayer = null;
                                 }
                             });
                             tempo -= 1000;
@@ -375,13 +360,10 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_errado);
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
                     }
                 });
 
@@ -420,13 +402,10 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.audio_gameover);
         mediaPlayer.start();
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
+        mediaPlayer.setOnCompletionListener(mp -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
             }
         });
 
