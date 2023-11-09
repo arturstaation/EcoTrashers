@@ -31,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
     int pausado;
     private SharedPreferences getHigh;
     private SharedPreferences getMoeda;
+    SharedPreferences getVolume;
     private long highscore;
     private long moedas;
+
+    private int mutado;
 
 
     private long tempoRestante;
@@ -63,14 +66,30 @@ public class MainActivity extends AppCompatActivity {
 
         getHigh = getSharedPreferences("highscore", Context.MODE_PRIVATE);
         getMoeda = getSharedPreferences("moedas", Context.MODE_PRIVATE);
+        getVolume = getSharedPreferences("mutado", Context.MODE_PRIVATE);
+
 
         highscore = getHigh.getLong("highscore", 0L);
         moedas = getMoeda.getLong("moedas", 0L);
+        mutado = getVolume.getInt("mutado", 0);
 
         vidas = 3;
         pontos = 0;
         lixo = -1;
         pausado = 0;
+
+        if(mutado == 1){
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.VISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.INVISIBLE);
+        }else{
+
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.INVISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.VISIBLE);
+        }
 
 
     }
@@ -152,44 +171,47 @@ public class MainActivity extends AppCompatActivity {
 
             if (lixoSelecionado == lixo) {
                 pontos++;
-                if (mediaPlayer != null) {
-
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-
-                mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
-                mediaPlayer.start();
-
-
-                mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
-                mediaPlayer.start();
-
-                mediaPlayer.setOnCompletionListener(mp -> {
+                if(mutado == 0) {
                     if (mediaPlayer != null) {
+
                         mediaPlayer.release();
                         mediaPlayer = null;
                     }
-                });
+
+                    mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                    mediaPlayer.start();
+
+
+
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    });
+
+                }
                 texto_pontos.setText("Pontos: " + pontos);
             } else {
                 vidas = vidas - 1;
-                if (mediaPlayer != null) {
-
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-
-
-                mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
-                mediaPlayer.start();
-
-                mediaPlayer.setOnCompletionListener(mp -> {
+                if(mutado == 0) {
                     if (mediaPlayer != null) {
+
                         mediaPlayer.release();
                         mediaPlayer = null;
                     }
-                });
+
+
+                    mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
+                    mediaPlayer.start();
+
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    });
+                }
                 tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
             }
@@ -260,41 +282,46 @@ public class MainActivity extends AppCompatActivity {
                     if (lixoSelecionado != -1) {
                         if (lixoSelecionado == lixo) {
                             pontos++;
-                            if (mediaPlayer != null) {
-
-                                mediaPlayer.release();
-                                mediaPlayer = null;
-
-                            }
-                            mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
-                            mediaPlayer.start();
-
-
-                            mediaPlayer.setOnCompletionListener(mp -> {
+                            if(mutado == 0) {
                                 if (mediaPlayer != null) {
+
                                     mediaPlayer.release();
                                     mediaPlayer = null;
+
                                 }
-                            });
+                                mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                                mediaPlayer.start();
+
+
+                                mediaPlayer.setOnCompletionListener(mp -> {
+                                    if (mediaPlayer != null) {
+                                        mediaPlayer.release();
+                                        mediaPlayer = null;
+                                    }
+                                });
+                            }
                             texto_pontos.setText("Pontos: " + pontos);
                         } else {
                             vidas = vidas - 1;
-                            if (mediaPlayer != null) {
 
-                                mediaPlayer.release();
-                                mediaPlayer = null;
-                            }
-
-
-                            mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
-                            mediaPlayer.start();
-
-                            mediaPlayer.setOnCompletionListener(mp -> {
+                            if(mutado == 0) {
                                 if (mediaPlayer != null) {
+
                                     mediaPlayer.release();
                                     mediaPlayer = null;
                                 }
-                            });
+
+
+                                mediaPlayer = MediaPlayer.create(this, R.raw.audio_errado);
+                                mediaPlayer.start();
+
+                                mediaPlayer.setOnCompletionListener(mp -> {
+                                    if (mediaPlayer != null) {
+                                        mediaPlayer.release();
+                                        mediaPlayer = null;
+                                    }
+                                });
+                            }
                             tempo -= 1000;
                             texto_vidas.setText("Vidas: " + vidas);
                         }
@@ -371,21 +398,23 @@ public class MainActivity extends AppCompatActivity {
                 atualizarTempoRestante();
                 vidas = vidas - 1;
 
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
 
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_errado);
-                mediaPlayer.start();
-
-                mediaPlayer.setOnCompletionListener(mp -> {
+                if(mutado == 0) {
                     if (mediaPlayer != null) {
                         mediaPlayer.release();
                         mediaPlayer = null;
                     }
-                });
 
+                    mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_errado);
+                    mediaPlayer.start();
+
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    });
+                }
 
                 tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
@@ -412,22 +441,24 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
         tempoRestante = 0;
 
-        if (mediaPlayer != null) {
-
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.audio_gameover);
-        mediaPlayer.start();
-
-        mediaPlayer.setOnCompletionListener(mp -> {
+        if(mutado == 0) {
             if (mediaPlayer != null) {
+
                 mediaPlayer.release();
                 mediaPlayer = null;
             }
-        });
+
+
+            mediaPlayer = MediaPlayer.create(this, R.raw.audio_gameover);
+            mediaPlayer.start();
+
+            mediaPlayer.setOnCompletionListener(mp -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+            });
+        }
 
         setContentView(R.layout.activity_perder);
         TextView derrota = findViewById(R.id.texto_highscore);
@@ -461,6 +492,19 @@ public class MainActivity extends AppCompatActivity {
         pontos = 0;
         pausado = 0;
         setContentView(R.layout.activity_main);
+
+        if(mutado == 1){
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.VISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.INVISIBLE);
+        }else{
+
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.INVISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -511,10 +555,51 @@ public class MainActivity extends AppCompatActivity {
         pausado = 1;
 
 
+        if(mutado == 1){
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.VISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.INVISIBLE);
+        }else{
+
+            ImageView mute = findViewById(R.id.imagem_mutado);
+            mute.setVisibility(View.INVISIBLE);
+            ImageView desmutado = findViewById(R.id.imagem_volume);
+            desmutado.setVisibility(View.VISIBLE);
+        }
+
+
+
 
     }
 
     public void onDesistir(View view){
         gameOver();
     }
+
+    public void onMutar(View view){
+
+        SharedPreferences.Editor edtiMutado = getVolume.edit();
+        edtiMutado.putInt("mutado", 1);
+        edtiMutado.apply();
+        mutado = 1;
+        ImageView mute = findViewById(R.id.imagem_mutado);
+        mute.setVisibility(View.VISIBLE);
+        ImageView desmutado = findViewById(R.id.imagem_volume);
+        desmutado.setVisibility(View.INVISIBLE);
+
+
+    }
+    public void onDesmutar(View view){
+        SharedPreferences.Editor edtiMutado = getVolume.edit();
+        edtiMutado.putInt("mutado", 0);
+        edtiMutado.apply();
+        mutado = 0;
+        ImageView mute = findViewById(R.id.imagem_mutado);
+        mute.setVisibility(View.INVISIBLE);
+        ImageView desmutado = findViewById(R.id.imagem_volume);
+        desmutado.setVisibility(View.VISIBLE);
+    }
+
+
 }
