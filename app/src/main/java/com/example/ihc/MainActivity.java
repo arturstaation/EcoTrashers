@@ -23,7 +23,6 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
 
-
     int vidas;
     long pontos;
 
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences getMoeda;
     private long highscore;
     private long moedas;
-
 
 
     private long tempoRestante;
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         highscore = getHigh.getLong("highscore", 0L);
         moedas = getMoeda.getLong("moedas", 0L);
 
-        if(mediaPlayer !=null) {
+        if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(mediaPlayer != null){
+                if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
 
@@ -90,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     public void onJogar(View view) {
         mediaPlayer.release();
@@ -140,33 +139,32 @@ public class MainActivity extends AppCompatActivity {
 
             if (lixoSelecionado == lixo) {
                 pontos++;
-                if(mediaPlayer != null){
+                if (mediaPlayer != null) {
 
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
 
-                    mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
-                    mediaPlayer.start();
-
+                mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
+                mediaPlayer.start();
 
 
                 mediaPlayer = MediaPlayer.create(this, R.raw.audio_certo);
                 mediaPlayer.start();
 
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    if(mediaPlayer != null){
-                        mediaPlayer.release();
-                        mediaPlayer = null;
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
                     }
-                }
-            });
+                });
                 texto_pontos.setText("Pontos: " + pontos);
             } else {
                 vidas = vidas - 1;
-                if(mediaPlayer != null){
+                if (mediaPlayer != null) {
 
                     mediaPlayer.release();
                     mediaPlayer = null;
@@ -179,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        if(mediaPlayer != null){
+                        if (mediaPlayer != null) {
                             mediaPlayer.release();
                             mediaPlayer = null;
                         }
@@ -192,11 +190,11 @@ public class MainActivity extends AppCompatActivity {
             GerarLixo();
             countDownTimer.cancel();
 
-            if(pontos % acertos == 0){
+            if (pontos % acertos == 0) {
                 indice = (indice - reducao);
             }
 
-            if ((long) (tempo * indice) < 2000){
+            if ((long) (tempo * indice) < 2000) {
                 tempoRestante = 2000;
             } else {
                 tempoRestante = (long) (tempo * indice);
@@ -255,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                     if (lixoSelecionado != -1) {
                         if (lixoSelecionado == lixo) {
                             pontos++;
-                            if(mediaPlayer != null){
+                            if (mediaPlayer != null) {
 
                                 mediaPlayer.release();
                                 mediaPlayer = null;
@@ -268,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                 @Override
                                 public void onCompletion(MediaPlayer mp) {
-                                    if(mediaPlayer != null){
+                                    if (mediaPlayer != null) {
                                         mediaPlayer.release();
                                         mediaPlayer = null;
                                     }
@@ -276,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
                             });
                             texto_pontos.setText("Pontos: " + pontos);
                         } else {
-                            vidas = vidas -1;
-                            if(mediaPlayer != null){
+                            vidas = vidas - 1;
+                            if (mediaPlayer != null) {
 
                                 mediaPlayer.release();
                                 mediaPlayer = null;
@@ -290,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                 @Override
                                 public void onCompletion(MediaPlayer mp) {
-                                    if(mediaPlayer != null){
+                                    if (mediaPlayer != null) {
                                         mediaPlayer.release();
                                         mediaPlayer = null;
                                     }
@@ -350,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     private void startCountdown() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -365,16 +364,10 @@ public class MainActivity extends AppCompatActivity {
                 tempoRestante = 0;
 
 
-
-
-
-
-
-
                 atualizarTempoRestante();
                 vidas = vidas - 1;
 
-                if(mediaPlayer !=null) {
+                if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
@@ -385,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        if(mediaPlayer != null){
+                        if (mediaPlayer != null) {
                             mediaPlayer.release();
                             mediaPlayer = null;
                         }
@@ -395,7 +388,6 @@ public class MainActivity extends AppCompatActivity {
 
                 tempo = tempo - 1000;
                 texto_vidas.setText("Vidas: " + vidas);
-
 
 
                 if (vidas <= 0) {
@@ -418,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
         tempoRestante = 0;
 
-        if(mediaPlayer != null){
+        if (mediaPlayer != null) {
 
             mediaPlayer.release();
             mediaPlayer = null;
@@ -431,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(mediaPlayer != null){
+                if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
@@ -462,13 +454,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onPerder(View view){
+    public void onPerder(View view) {
 
         setContentView(R.layout.activity_main);
     }
 
     @SuppressLint("SetTextI18n")
-    public void onPerfil(View view){
+    public void onPerfil(View view) {
 
         setContentView(R.layout.activity_perfil);
         TextView texto_highscore = findViewById(R.id.texto_highscore);
@@ -478,61 +470,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void GerarLixo(){
+    public void GerarLixo() {
 
 
         lixo = new Random().nextInt(4);
         if (lixo == 0) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
-            if(mediaPlayer != null){
-
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-            mediaPlayer = MediaPlayer.create(this, R.raw.audio_metal);
-            mediaPlayer.start();
 
 
         } else if (lixo == 1) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
-            if(mediaPlayer != null){
 
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-            mediaPlayer = MediaPlayer.create(this, R.raw.audio_papel);
-            mediaPlayer.start();
         } else if (lixo == 2) {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
-            if(mediaPlayer != null){
 
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-            mediaPlayer = MediaPlayer.create(this, R.raw.audio_plastico);
-            mediaPlayer.start();
         } else {
             lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
-            if(mediaPlayer != null){
 
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-            mediaPlayer = MediaPlayer.create(this, R.raw.audio_vidro);
-            mediaPlayer.start();
+
         }
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                 if(mediaPlayer != null){
-                     mediaPlayer.release();
-                     mediaPlayer = null;
-                 }
-            }
-        });
-        startCountdown();
 
     }
-
 }
