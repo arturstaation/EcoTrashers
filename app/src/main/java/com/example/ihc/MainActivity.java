@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     long pontos;
 
     int lixo;
+
+    int pausado;
     private SharedPreferences getHigh;
     private SharedPreferences getMoeda;
     private long highscore;
@@ -65,38 +67,54 @@ public class MainActivity extends AppCompatActivity {
         highscore = getHigh.getLong("highscore", 0L);
         moedas = getMoeda.getLong("moedas", 0L);
 
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-
-        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
-        mediaPlayer.start();
-
-        mediaPlayer.setOnCompletionListener(mp -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.release();
-                mediaPlayer = null;
-
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.audio_menu);
-                mediaPlayer.start();
-            }
-        });
+        vidas = 3;
+        pontos = 0;
+        lixo = -1;
+        pausado = 0;
 
 
     }
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     public void onJogar(View view) {
-        mediaPlayer.release();
-        mediaPlayer = null;
 
-        tempo = 10000;
-        vidas = 3;
-        pontos = 0;
-        indice = 1;
-        tempoRestante = tempo;
+
         setContentView(R.layout.activity_jogar);
+        lixo_imagem = findViewById(R.id.lixo_imagem);
+        if(pausado == 0){
+
+            tempo = 10000;
+
+            GerarLixo();
+
+            indice = 1;
+
+            tempoRestante = tempo;
+        }
+
+        else{
+
+            if (lixo == 0) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+
+
+            } else if (lixo == 1) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
+
+            } else if (lixo == 2) {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
+
+            } else {
+                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
+
+
+            }
+
+            startCountdown();
+
+        }
+
+
 
         texto_pontos = findViewById(R.id.texto_pontos);
         texto_vidas = findViewById(R.id.texto_vidas);
@@ -104,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         lixo_papel = findViewById(R.id.lixo_papel);
         lixo_plastico = findViewById(R.id.lixo_plastico);
         lixo_vidro = findViewById(R.id.lixo_vidro);
-        lixo_imagem = findViewById(R.id.lixo_imagem);
 
         lixo_metal.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_orange_light));
         lixo_papel.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_blue_light));
@@ -116,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
         atualizarTempoRestante();
 
-        GerarLixo();
 
         startCountdown();
 
@@ -335,9 +351,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startCountdown() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+
+
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
+            }
+
         countDownTimer = new CountDownTimer(tempoRestante, 1000) {
             public void onTick(long millisUntilFinished) {
                 tempoRestante = millisUntilFinished;
@@ -378,6 +397,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     tempoRestante = tempo;
+                    startCountdown();
 
                     GerarLixo();
                 }
@@ -430,12 +450,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             pmaxima.setText("Seu recorde é: " + highscore);
         }
+
     }
 
 
     public void onPerder(View view) {
 
+
+        vidas = 3;
+        pontos = 0;
+        pausado = 0;
         setContentView(R.layout.activity_main);
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -469,5 +495,26 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+    @SuppressLint("SetTextI18n")
+
+    public void onPausar(View view){
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        setContentView(R.layout.activity_pausado);
+        TextView pontosatual = findViewById(R.id.texto_highscore);
+        pontosatual.setText("Sua pontuação atual é: " + pontos);
+        TextView vidasr = findViewById(R.id.texto_saldo);
+        vidasr.setText("Você ainda tem " + vidas + " vidas");
+        pausado = 1;
+
+
+
+    }
+
+    public void onDesistir(View view){
+        gameOver();
     }
 }
