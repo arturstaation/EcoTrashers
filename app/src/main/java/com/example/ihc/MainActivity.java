@@ -78,16 +78,14 @@ public class MainActivity extends AppCompatActivity {
         lixo = -1;
         pausado = 0;
 
+        ImageView mute = findViewById(R.id.imagem_mutado);
+        ImageView desmutado = findViewById(R.id.imagem_volume);
         if(mutado == 1){
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.VISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.INVISIBLE);
         }else{
 
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.INVISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.VISIBLE);
         }
 
@@ -493,16 +491,14 @@ public class MainActivity extends AppCompatActivity {
         pausado = 0;
         setContentView(R.layout.activity_main);
 
+        ImageView mute = findViewById(R.id.imagem_mutado);
+        ImageView desmutado = findViewById(R.id.imagem_volume);
         if(mutado == 1){
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.VISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.INVISIBLE);
         }else{
 
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.INVISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.VISIBLE);
         }
 
@@ -557,16 +553,14 @@ public class MainActivity extends AppCompatActivity {
         pausado = 1;
 
 
+        ImageView mute = findViewById(R.id.imagem_mutado);
+        ImageView desmutado = findViewById(R.id.imagem_volume);
         if(mutado == 1){
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.VISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.INVISIBLE);
         }else{
 
-            ImageView mute = findViewById(R.id.imagem_mutado);
             mute.setVisibility(View.INVISIBLE);
-            ImageView desmutado = findViewById(R.id.imagem_volume);
             desmutado.setVisibility(View.VISIBLE);
         }
 
