@@ -552,6 +552,8 @@ public class MainActivity extends AppCompatActivity {
         pontosatual.setText("Sua pontuação atual é: " + pontos);
         TextView vidasr = findViewById(R.id.texto_saldo);
         vidasr.setText("Você ainda tem " + vidas + " vidas");
+        TextView tempor = findViewById(R.id.texto_temporestante);
+        tempor.setText("Você ainda tem " + (tempoRestante/1000) + " s");
         pausado = 1;
 
 
