@@ -3,6 +3,7 @@ package com.example.ihc;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -17,6 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.animation.ObjectAnimator;
+import android.view.animation.LinearInterpolator;
 
 import java.util.Random;
 
@@ -63,6 +66,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Obtém a referência à ImageView
+        ImageView imageView = findViewById(R.id.imagem_Eco_Thrashers_Title);
+
+        // Cria os animators para as animações de escala
+        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(imageView, "scaleX", 0.75f, 1.25f);
+        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(imageView, "scaleY", 0.75f, 1.25f);
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(imageView, "scaleX", 1.25f, 0.75f);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(imageView, "scaleY", 1.25f, 0.75f);
+
+        // Configura a duração e o interpolador para as animações
+        scaleUpX.setDuration(1000);
+        scaleUpY.setDuration(1000);
+        scaleDownX.setDuration(1000);
+        scaleDownY.setDuration(1000);
+
+        scaleUpX.setInterpolator(new LinearInterpolator());
+        scaleUpY.setInterpolator(new LinearInterpolator());
+        scaleDownX.setInterpolator(new LinearInterpolator());
+        scaleDownY.setInterpolator(new LinearInterpolator());
+
+        // Cria o AnimatorSet
+        final ValueAnimator scaleAnimation = new ValueAnimator();
+        scaleAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        scaleAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        scaleAnimation.setDuration(1000);
+        scaleAnimation.setInterpolator(new LinearInterpolator());
+        scaleAnimation.setFloatValues(0, 1);
+
+        // Adiciona um listener para atualizar a escala com base no valor animado
+        scaleAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                imageView.setScaleX(1 + 0.5f * value);
+                imageView.setScaleY(1 + 0.5f * value);
+            }
+        });
+
+        // Inicia a animação
+        scaleAnimation.start();
 
         getHigh = getSharedPreferences("highscore", Context.MODE_PRIVATE);
         getMoeda = getSharedPreferences("moedas", Context.MODE_PRIVATE);
