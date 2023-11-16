@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_jogar);
         lixo_imagem = findViewById(R.id.lixo_imagem);
+
         if(pausado == 0){
 
             tempo = 10000;
@@ -156,18 +157,17 @@ public class MainActivity extends AppCompatActivity {
         else{
 
             if (lixo == 0) {
-                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+                lixo_imagem.setImageResource(R.drawable.metal_01);
 
 
             } else if (lixo == 1) {
-                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
+                lixo_imagem.setImageResource(R.drawable.papel_01);
 
             } else if (lixo == 2) {
-                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
+                lixo_imagem.setImageResource(R.drawable.plastico_01);
 
             } else {
-                lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
-
+                lixo_imagem.setImageResource(R.drawable.vidro_01);
 
             }
 
@@ -184,12 +184,7 @@ public class MainActivity extends AppCompatActivity {
         lixo_plastico = findViewById(R.id.lixo_plastico);
         lixo_vidro = findViewById(R.id.lixo_vidro);
 
-        lixo_metal.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_orange_light));
-        lixo_papel.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_blue_light));
-        lixo_plastico.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_red_light));
-        lixo_vidro.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_green_light));
-
-        texto_vidas.setText("Vidas: " + vidas);
+        texto_vidas.setText(" " + vidas);
         texto_pontos.setText("Pontos: " + pontos);
 
         atualizarTempoRestante();
@@ -255,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
                 tempo = tempo - 1000;
-                texto_vidas.setText("Vidas: " + vidas);
+                texto_vidas.setText(" " + vidas);
             }
 
             GerarLixo();
@@ -365,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                             }
                             tempo -= 1000;
-                            texto_vidas.setText("Vidas: " + vidas);
+                            texto_vidas.setText(" " + vidas);
                         }
 
                         GerarLixo();
@@ -459,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 tempo = tempo - 1000;
-                texto_vidas.setText("Vidas: " + vidas);
+                texto_vidas.setText(" " + vidas);
 
 
                 if (vidas <= 0) {
@@ -564,17 +559,17 @@ public class MainActivity extends AppCompatActivity {
 
         lixo = new Random().nextInt(4);
         if (lixo == 0) {
-            lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+            lixo_imagem.setImageResource(R.drawable.metal_01);
 
 
         } else if (lixo == 1) {
-            lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_blue_light));
+            lixo_imagem.setImageResource(R.drawable.papel_01);
 
         } else if (lixo == 2) {
-            lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_light));
+            lixo_imagem.setImageResource(R.drawable.plastico_01);
 
         } else {
-            lixo_imagem.setColorFilter(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_light));
+            lixo_imagem.setImageResource(R.drawable.vidro_01);
 
 
         }
