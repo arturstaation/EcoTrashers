@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073"
         app:srcCompat="@android:drawable/ic_lock_silent_mode"
-        app:tint="@color/secundary_color" />
+        app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/imagem_volume"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073"
         app:srcCompat="@drawable/volume"
-        app:tint="@color/secundary_color" />
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/texto_pontos"
@@ -62,7 +62,7 @@
         android:elevation="4dp"
         android:onClick="onJogar"
         android:text="Voltar para o jogo"
-        android:textColor="@color/primary_color"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
