@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pause_background"
-    android:onClick="onPerder"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imagem_mutado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onDesmutar"
         android:background="@drawable/round_image_view"
+        android:onClick="onDesmutar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.022"
@@ -21,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073"
         app:srcCompat="@android:drawable/ic_lock_silent_mode"
-        app:tint="@color/secundary_color"/>
+        app:tint="@color/secundary_color" />
 
     <ImageView
         android:id="@+id/imagem_volume"
@@ -35,7 +34,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073"
-        app:srcCompat="@android:drawable/ic_lock_silent_mode_off" />
+        app:srcCompat="@android:drawable/ic_lock_silent_mode_off"
+        app:tint="@color/secundary_color"/>/>
 
     <TextView
         android:id="@+id/texto_pontos"
@@ -43,9 +43,9 @@
         android:layout_height="wrap_content"
         android:onClick="onJogar"
         android:text="PAUSE"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="15pt"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.742"
