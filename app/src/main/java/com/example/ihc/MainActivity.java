@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     int vidas;
     long pontos;
-
+    int atual;
     int lixo;
 
     int pausado;
@@ -678,4 +678,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onTutorial(View view){
+        atual = 0;
+        setContentView(R.layout.activity_tutorial);
+        setImage();
+    }
+
+    public void onAdd(View view){
+        if(atual  == 11){
+            atual = 0;
+        }else{
+            atual = atual +1;
+        }
+        setImage();
+    }
+
+    public void onRemover(View view){
+        if(atual == 0){
+            atual = 11;
+        }else{
+            atual = atual - 1;
+        }
+        setImage();
+    }
+
+    public void setImage(){
+        ImageView imagem_tutorial = findViewById(R.id.imagem_tutorial);
+        if(atual == 0){
+            imagem_tutorial.setImageResource(R.drawable.imagem1);
+
+        }else if(atual == 1){
+            imagem_tutorial.setImageResource(R.drawable.imagem2);
+        }else if(atual == 2){
+            imagem_tutorial.setImageResource(R.drawable.imagem3);
+        }else if(atual == 3){
+            imagem_tutorial.setImageResource(R.drawable.imagem4);
+        }else if(atual == 4){
+            imagem_tutorial.setImageResource(R.drawable.imagem5);
+        }else if(atual == 5){
+            imagem_tutorial.setImageResource(R.drawable.imagem6);
+        }else if(atual == 6){
+            imagem_tutorial.setImageResource(R.drawable.imagem7);
+        }else if(atual == 7){
+            imagem_tutorial.setImageResource(R.drawable.imagem8);
+        }else if(atual == 8){
+            imagem_tutorial.setImageResource(R.drawable.imagem9);
+        }else if(atual == 9){
+            imagem_tutorial.setImageResource(R.drawable.imagem10);
+        }else if(atual == 10){
+            imagem_tutorial.setImageResource(R.drawable.imagem11);
+        }else if(atual == 11){
+            imagem_tutorial.setImageResource(R.drawable.imagem12);
+        }
+    }
 }
